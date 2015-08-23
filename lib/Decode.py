@@ -1,40 +1,47 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-def decode(length, K, n, weight):
+class Decode:
     
-    # Initialize
-    insert   = [[False for k in range(0, K + 2)]for i in range(0, n + 2)]
-    score    = [[0 for k in range(0, K + 2)]for i in range(0, n + 2)]
-    solution = [False for i in range(0, n + 2)]
+    def __init__(self, length, K, n, weight):
+        self.K        = K
+        self.length   = length
+        self.n        = n
+        self.weight   = weight
     
-    # Loop
-    for i in range(1, n + 1):
-        for k in range(1, K + 1):
-            if length[i] <= k and score[i-1][k] <= score[i-1][k-length[i]] + weight[i]:
-                insert[i][k] = True
-                score[i][k]  = score[i-1][k-length[i]] + weight[i]
-            else:
-                score[i][k]  = score[i-1][k]
-            #print '%d %d ' % (i, k),
-            #print insert[i][k],
-            print score[i][k],
-        print ''
+        self.solution = [False for i in range(0, n + 1)]
+    
+    def Search(self, ):
+    
+        # Initialize
+        insert   = [[False for k in range(0, self.K + 2)]for i in range(0, self.n + 2)]
+        score    = [[0 for k in range(0, self.K + 2)]for i in range(0, self.n + 2)]
+    
+        # Loop
+        for i in range(1, self.n + 1):
+            for k in range(1, self.K + 1):
+                if self.length[i] <= k and score[i - 1][k] <= score[i - 1][k - self.length[i]] + self.weight[i]:
+                    insert[i][k] = True
+                    score[i][k]  = score[i - 1][k - self.length[i]] + self.weight[i]
+                else:
+                    score[i][k]  = score[i - 1][k]
 
-    # Trace
-    k = K
-    for i in range(n, 0, -1):
-        if insert[i][k] == True:
-            k = k - length[i]
-            solution[i] = True
+        # Trace
+        k = self.K
+        for i in range(self.n, 0, -1):
+            if insert[i][k] == True:
+                k = k - self.length[i]
+                self.solution[i] = True
 
-    return solution
+    def GetSolution(self):
+        return self.solution
 
+if __name__ == '__main__':
+    length = (0, 5, 3, 1)
+    weight = (0, 4, 3, 2)
 
-length = (None, 5, 3, 1, None)
-weight = (None, 4, 3, 2, None)
-
-K = 7
-n = 3
-
-print decode(length, K, n, weight)
+    K = 7
+    n = 3
+    
+    dc = Decode()
+    print dc.Search(length, K, n, weight)

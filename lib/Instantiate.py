@@ -6,7 +6,7 @@ class Instantiate:
     def __init__(self, dict_path):
         self.dict = {}
         self.ReadDictionary(dict_path)
-        self.sentence_weights = [0]
+        self.sentence_weights = []
 
     def ReadDictionary(self, dict_path):
         f = open(dict_path, 'r')
@@ -18,8 +18,16 @@ class Instantiate:
 
     def CalculateSentenceWeights(self, features):
         for feature in features:
+            score = 0
             for key, value in feature.items():
-                print key, value
+                if key in self.dict:
+                    score = score + float(value) * float(self.dict[key])
+            #print score
+            self.sentence_weights.append(score)
 
-dict_path = '/Users/hitoshi/work/dev/shuka/dic/weight.dic'
-inst = Instantiate(dict_path)
+    def GetSentenceWeights(self):
+        return self.sentence_weights
+
+if __name__ == '__main__':
+    dict_path = '/Users/hitoshi/work/dev/shuka/dic/weight.dic'
+    inst = Instantiate(dict_path)

@@ -21,6 +21,10 @@ class ExtractFeature:
         self.p_pattern = re.compile(u'^\+')
         self.e_pattern = re.compile(u'^EOS')
         self.w_pattern = re.compile(u'^(\S+) (\S+) (\S+) (\S+) ')
+        self.n_pattern = re.compile(u'^.+NE:(\S+?):')
+    
+        self.ReadInput()
+        self.ExtractFeatureVector()
 
     def ReadInput(self):
 
@@ -44,18 +48,21 @@ class ExtractFeature:
             p_match = self.p_pattern.match(line)
             e_match = self.e_pattern.match(line)
    
-            if s_match != None:
+            if s_match:
                 i = i + 1
                 self.features.append({})
                 self.lengths.append('')
                 self.sentences.append('')
                 if i == 1:
-                    self.features[i]['is_lead'] = 1
-            elif b_match != None:
+                    self.features[i][u'is_lead'] = 1
+            elif b_match:
                 pass
-            elif p_match != None:
-                pass
-            elif e_match != None:
+            elif p_match:
+                n_match = self.n_pattern.match(line)
+                if n_match:
+                    ne_type = n_match.group(1)
+                    self.features[i][u'n:%s' % (ne_type)] = 1
+            elif e_match:
                 self.lengths[i] = len(self.sentences[i])
             else:
                 w_match = self.w_pattern.match(line)
@@ -64,12 +71,12 @@ class ExtractFeature:
                     pos     = w_match.group(4)
                     self.sentences[i] = self.sentences[i] + surface
 
-                    self.features[i]['abs_pos'] = i
-                    self.features[i]['rel_pos'] = float(i) / self.n
+                    self.features[i][u'abs_pos'] = i
+                    self.features[i][u'rel_pos'] = float(i) / self.n
 
                     c_match = self.c_pattern.match(pos)
                     if c_match:
-                        self.features[i]['s:%s' % (surface)] = 1
+                        self.features[i][u's:%s' % (surface)] = 1
 
     def GetFeatures(self):
         return self.features
@@ -86,10 +93,12 @@ class ExtractFeature:
     def GetResults(self):
         return self.features, self.lengths, self.n, self.sentences
 
-ef = ExtractFeature()
-ef.ReadInput()
-features, lengths, n, sentences = ef.ExtractFeatureVector()
-for i in range(0, len(sentences)):
-    print '%d %s %d' % (i, sentences[i], lengths[i])
-    for key, value in features[i].items():
-        print '%s %f' % (key, value)
+if __name__ == '__main__':
+    ef = ExtractFeature()
+    features, lengths, n, sentences = ef.GetResults()
+    #print n
+    for i in range(0, len(sentences)):
+        print '%d %s %d' % (i, sentences[i], lengths[i])
+        for key, value in features[i].items():
+            pass
+            print '%s %f' % (key, value)
