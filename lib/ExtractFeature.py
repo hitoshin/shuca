@@ -6,10 +6,11 @@ import sys
 
 class ExtractFeature:
 
-    def __init__(self):
+    def __init__(self, length_by_sentence):
 
         self.features  = [{}]
         self.lengths   = [0]
+        self.length_by_sentence = length_by_sentence
         self.sentences = ['']
 
         self.lines     = []
@@ -63,7 +64,10 @@ class ExtractFeature:
                     ne_type = n_match.group(1)
                     self.features[i][u'n:%s' % (ne_type)] = 1
             elif e_match:
-                self.lengths[i] = len(self.sentences[i])
+                if self.length_by_sentence is True:
+                    self.lengths[i] = 1
+                else:
+                    self.lengths[i] = len(self.sentences[i])
             else:
                 w_match = self.w_pattern.match(line)
                 if w_match:
@@ -77,6 +81,7 @@ class ExtractFeature:
                     c_match = self.c_pattern.match(pos)
                     if c_match:
                         self.features[i][u's:%s' % (surface)] = 1
+        self.features[i][u'is_last'] = 1
 
     def GetFeatures(self):
         return self.features
