@@ -1,4 +1,7 @@
 is_lead	10
+is_last	1
 abs_pos	-0.01
-rel_pos	-1
-s:柔軟な	10
+rel_pos	-0.1
+n:PERCENT       1.0
+n:ORGANIZATION  2.0
+n:PERSON        2.0
