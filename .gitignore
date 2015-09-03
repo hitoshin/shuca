@@ -1,0 +1,8 @@
+# Directories
+dat/
+release/
+tmp/
+
+# Files
+*.pyc
+
