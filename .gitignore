@@ -8,7 +8,3 @@ tmp/
 # Files
 *.pyc
 
-# Exception
-!dic/weight.dic
-!libexec/SentenceSplitter.py
-

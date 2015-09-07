@@ -13,7 +13,7 @@ import ExtractFeature
 import Format
 import Instantiate
 
-class Shuka:
+class Shuca:
 
     def __init__(self):
     
@@ -52,5 +52,5 @@ class Shuka:
         fm.FormatSummary()
 
 if __name__ == '__main__':
-    sh = Shuka()
+    sh = Shuca()
     sh.Summarize()
