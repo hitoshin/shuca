@@ -13,7 +13,7 @@ class Instantiate:
         for line in f.readlines():
             line = unicode(line, 'UTF-8')
             line = line.rstrip()
-            (feature, weight) = line.split('\t')
+            (feature, weight) = line.split(u'\t')
             self.dict[feature] = weight
 
     def CalculateSentenceWeights(self, features):
