@@ -121,5 +121,4 @@ if __name__ == '__main__':
     for i in range(0, len(sentences)):
         print '%d %s %d' % (i, sentences[i], lengths[i])
         for key, value in features[i].items():
-            pass
             print '%s %f' % (key, value)

@@ -37,11 +37,4 @@ class Decode:
         return self.solution
 
 if __name__ == '__main__':
-    length = (0, 5, 3, 1)
-    weight = (0, 4, 3, 2)
-
-    K = 7
-    n = 3
-    
-    dc = Decode()
-    print dc.Search(length, K, n, weight)
+    pass

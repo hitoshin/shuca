@@ -22,12 +22,10 @@ class Instantiate:
             for key, value in feature.items():
                 if key in self.dict:
                     score = score + float(value) * float(self.dict[key])
-            #print score
             self.sentence_weights.append(score)
 
     def GetSentenceWeights(self):
         return self.sentence_weights
 
 if __name__ == '__main__':
-    dict_path = '/Users/hitoshi/work/dev/shuka/dic/weight.dic'
-    inst = Instantiate(dict_path)
+    pass
