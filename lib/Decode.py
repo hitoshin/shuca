@@ -11,7 +11,7 @@ class Decode:
     
         self.solution = [False for i in range(0, n + 1)]
     
-    def Search(self, ):
+    def Search(self):
     
         # Initialize
         insert   = [[False for k in range(0, self.K + 2)]for i in range(0, self.n + 2)]
