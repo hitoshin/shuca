@@ -4,6 +4,7 @@
 class Instantiate:
 
     def __init__(self, dict_path):
+        self.concept_weights = {}
         self.dict = {}
         self.ReadDictionary(dict_path)
         self.sentence_weights = []
@@ -23,6 +24,16 @@ class Instantiate:
                 if key in self.dict:
                     score = score + float(value) * float(self.dict[key])
             self.sentence_weights.append(score)
+
+    def CalculateConceptWeights(self, features):
+        for feature in features:
+            for key, value in feature.items():
+                if key in self.dict:
+                    score = score + float(value) * float(self.dict[key])
+            self.concept_weights[feature] = score
+
+    def GetConceptWeights(self):
+        return self.concept_weights
 
     def GetSentenceWeights(self):
         return self.sentence_weights

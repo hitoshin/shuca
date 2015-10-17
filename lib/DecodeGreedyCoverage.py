@@ -14,23 +14,24 @@ class DecodeGreedyCoverage:
 
     def __MakeSentences(self, length, n, vectors, weight):
         self.sentences = []
-        for i in range(n):
-            sentence = Sentence(i + 1, length[i], vectors[i], weight)
+        for i in range(1, n + 1):
+            sentence = Sentence(i, length[i], vectors[i], weight)
             self.sentences.append(sentence)
 
-    def __UpdateScores(self):
-        pass
-
     def GetSolution(self):
-        return self.current_sentences.id
+        solution = [False for i in range(0, self.n + 1)]
+        for i in self.current_sentences.id:
+            solution[i] = True
+        solution[0] = False
+        return solution
 
     def Search(self):
         self.current_sentences = Sentence(0, 0, {}, {})
         while len(self.sentences) > 0:
             self.sentences.sort()
             sentence = self.sentences.pop()
-            if sentence.length + self.current_sentences.length <= K:
-                self.current_sentences.Update(sentence, weight)
+            if sentence.length + self.current_sentences.length <= self.K:
+                self.current_sentences.Update(sentence, self.weight)
 
 class Sentence:
     def __init__(self, id, length, term_vector, weight):
@@ -60,10 +61,11 @@ class Sentence:
         self.score  = self.__CalculateScore(self.term_vector, weight)
 
 if __name__ == '__main__':
-    length  = [6, 5, 4]
+    length  = [0, 6, 5, 4]
     K       = 10
     n       = 3
-    vectors = [{'a':1, 'b':1},
+    vectors = [{},
+               {'a':1, 'b':1},
                {'b':1, 'c':1},
                {'a':1, 'c':1}]
     weight  = {'a':10, 'b':5, 'c':2, 'd':'7'}

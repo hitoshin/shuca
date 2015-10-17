@@ -6,11 +6,13 @@ import sys
 
 class ExtractFeature:
 
-    def __init__(self, length_by_sentence):
+    def __init__(self, options):
+        
+        self.options = options
 
         self.features  = [{}]
         self.lengths   = [0]
-        self.length_by_sentence = length_by_sentence
+        self.length_by_sentence = self.options.length_by_sentence
         self.sentences = ['']
         self.term_dic  = {}
 
@@ -26,7 +28,10 @@ class ExtractFeature:
         self.n_pattern = re.compile(u'^.+NE:(\S+?):')
     
         self.ReadInput()
-        self.ExtractFeatureVector()
+        if self.options.input_type == 'knp':
+            self.ExtractFeatureVector()
+        elif self.options.input_type == 'eng':
+            self.ExtractFeatureVectorEng()
 
     def ReadInput(self):
 
@@ -34,20 +39,33 @@ class ExtractFeature:
             line = unicode(line, 'UTF-8')
             line = line.rstrip()
             self.lines.append(line)
-
-            s_match = self.s_pattern.match(line)
-            w_match = self.w_pattern.match(line)
-            if s_match != None:
+            
+            if self.options.input_type == 'knp':
+                s_match = self.s_pattern.match(line)
+                w_match = self.w_pattern.match(line)
+                # Increment the number of sentences
+                if s_match != None:
+                    self.n = self.n + 1
+                # Count the frequency of each term
+                elif w_match != None:
+                    surface = w_match.group(1)
+                    pos     = w_match.group(4)
+                    c_match = self.c_pattern.match(pos)
+                    if c_match != None:
+                        if surface in self.term_dic:
+                            self.term_dic[surface] = self.term_dic[surface] + 1
+                        else:
+                            self.term_dic[surface] = 1
+            elif self.options.input_type == 'eng':
+                # Increment the number of sentences
                 self.n = self.n + 1
-            elif w_match != None:
-                surface = w_match.group(1)
-                pos     = w_match.group(4)
-                c_match = self.c_pattern.match(pos)
-                if c_match != None:
-                    if surface in self.term_dic:
-                        self.term_dic[surface] = self.term_dic[surface] + 1
+                # Count the frequency of each term
+                terms = line.split(u' ')
+                for term in terms:
+                    if term in self.term_dic:
+                        self.term_dic[term] = self.term_dic[term] + 1
                     else:
-                        self.term_dic[surface] = 1
+                        self.term_dic[term] = 1
 
     def ExtractFeatureVector(self):
 
@@ -99,7 +117,23 @@ class ExtractFeature:
     
         self.features[i][u'is_last'] = 1
         self.features[i][u'tf']      = term_freq
-        
+    
+    def ExtractFeatureVectorEng(self):
+        i = 0
+        for line in self.lines:
+            terms = line.split(u' ')
+            
+            i = i + 1
+            self.features.append({})
+            if self.options.length_by_sentence == True:
+                self.lengths.append(1)
+            else:
+                self.lengths.append(len(terms))
+            self.sentences.append(line)
+
+            for term in terms:
+                self.features[i][term] = 1
+    
     def GetFeatures(self):
         return self.features
     
@@ -111,6 +145,9 @@ class ExtractFeature:
     
     def GetSentences(self):
         return self.sentences
+
+    def GetTermDic(self):
+        return self.term_dic
 
     def GetResults(self):
         return self.features, self.lengths, self.n, self.sentences
