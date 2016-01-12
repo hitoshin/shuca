@@ -12,13 +12,17 @@ class DecodeGreedyCoverage:
         self.vectors = vectors
         self.weight  = weight
         
-        self.__MakeSentences(length, n, vectors, weight)
+        self.sentences = self.__MakeSentences(length, n, vectors, weight)
 
     def __MakeSentences(self, length, n, vectors, weight):
-        self.sentences = []
+        sentences = []
         for i in range(1, n + 1):
-            sentence = Sentence(i, length[i], vectors[i], weight)
-            self.sentences.append(sentence)
+            sentence = Sentence(id          = i,
+                                length      = length[i],
+                                term_vector = vectors[i],
+                                weight      = weight)
+            sentences.append(sentence)
+        return sentences
 
     def __UpdateSentenceWeight(self, weight):
         for sentence in self.sentences:
@@ -83,11 +87,11 @@ class Sentence:
 
 if __name__ == '__main__':
     length  = [0, 6, 5, 4]
-    K       = 11
+    K       = 9
     n       = 3
     vectors = [{},
                {'a':1, 'b':1},
-               {'b':1, 'c':1},
+               {'b':1},
                {'a':1, 'c':1}]
     weight  = {'a':10, 'b':5, 'c':2, 'd':'7'}
     dgc = DecodeGreedyCoverage(length, K, n, vectors, weight)
