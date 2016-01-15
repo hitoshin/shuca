@@ -41,6 +41,6 @@ Please test a following command:
 ## Developer
 Hitoshi Nishikawa
 
-E-Mail: hitoshi [at] nishikawa [dot] name
-GitHub: [hitoshin](https://github.com/hitoshin)
-Website: [Hitoshi's Home Page](http://www.hitoshi.nishikawa.name)
+* E-Mail: hitoshi [at] nishikawa [dot] name
+* GitHub: [hitoshin](https://github.com/hitoshin)
+* Website: [Hitoshi's Home Page](http://www.hitoshi.nishikawa.name)
