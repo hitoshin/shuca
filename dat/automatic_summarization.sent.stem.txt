@@ -1,0 +1,20 @@
+automat summar is the process of reduc a text document with a comput program in order to creat a summari that retain the most import point of the origin document.
+technolog that can make a coher summari take into account variabl such as length, write style and syntax.
+automat data summar is part of machin learn and data mine.
+the main idea of summar is to find a repres subset of the data, which contain the inform of the entir set.
+summar technolog ar us in a larg number of sector in industri todai.
+an exampl of the us of summar technolog is search engin such as googl.
+other exampl includ document summar, imag collect summar and video summar.
+document summar, tri to automat creat a repres summari or abstract of the entir document, by find the most inform sentenc.
+similarli, in imag summar the system find the most repres and import (or salient) imag.
+similarli, in consum video on would want to remov the bore or repetit scene, and extract out a much shorter and concis version of the video.
+thi is also import, sai for surveil video, where on might want to extract onli import event in the record video, sinc most part of the video mai be uninterest with noth go on.
+as the problem of inform overload grow, and as the amount of data increas, the interest in automat summar is also increas.
+
+gener, there ar two approach to automat summar: extract and abstract.
+extract method work by select a subset of exist word, phrase, or sentenc in the origin text to form the summari.
+in contrast, abstract method build an intern semant represent and then us natur languag gener techniqu to creat a summari that is closer to what a human might gener.
+such a summari might contain word not explicitli present in the origin.
+research into abstract method is an increasingli import and activ research area, howev due to complex constraint, research to date ha focus primarili on extract method.
+in some applic domain, extract summar make more sens.
+exampl of these includ imag collect summar and video summar.

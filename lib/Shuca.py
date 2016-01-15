@@ -31,7 +31,7 @@ class Shuca:
                           dest='dict_path',
                           type='string')
         parser.add_option('-e',
-                          '--input_type',
+                          '--english',
                           action='store_const',
                           const='eng',
                           dest='input_type')
